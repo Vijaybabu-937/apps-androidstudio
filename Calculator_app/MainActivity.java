@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText editText;
     float mValueOne, mValueTwo;
+    String add="+",subtract="-",multiply="*",divide="/";
     boolean mAddition, mSubtract, mMultiplication, mDivision;
 
     @Override
@@ -110,13 +111,15 @@ public class MainActivity extends AppCompatActivity {
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!editText.getText().toString().isEmpty()) {
 
-                if (editText == null) {
-                    editText.setText("");
-                } else {
-                    mValueOne = Float.parseFloat(editText.getText() + "");
-                    mAddition = true;
-                    editText.setText(null);
+                    if (editText == null) {
+                        editText.setText("");
+                    } else {
+                        mValueOne = Float.parseFloat(editText.getText() + "");
+                        mAddition = true;
+                        editText.setText(mValueOne + add);
+                    }
                 }
             }
         });
@@ -124,52 +127,69 @@ public class MainActivity extends AppCompatActivity {
         buttonSubtract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mValueOne = Float.parseFloat(editText.getText() + "");
-                mSubtract = true;
-                editText.setText(null);
+                if (!editText.getText().toString().isEmpty()) {
+                    mValueOne = Float.parseFloat(editText.getText() + "");
+                    mSubtract = true;
+                    editText.setText(mValueOne + subtract);
+                }
             }
         });
 
         buttonMultiply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mValueOne = Float.parseFloat(editText.getText() + "");
-                mMultiplication = true;
-                editText.setText(null);
+                if (!editText.getText().toString().isEmpty()) {
+                    mValueOne = Float.parseFloat(editText.getText() + "");
+                    mMultiplication = true;
+                    editText.setText(mValueOne + multiply);
+                }
             }
         });
 
         buttonDivide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mValueOne = Float.parseFloat(editText.getText() + "");
-                mDivision = true;
-                editText.setText(null);
+                if (!editText.getText().toString().isEmpty()) {
+                    mValueOne = Float.parseFloat(editText.getText() + "");
+                    mDivision = true;
+                    editText.setText(mValueOne + divide);
+                }
             }
         });
 
         buttonEqual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mValueTwo = Float.parseFloat(editText.getText() + "");
+                if (!editText.getText().toString().isEmpty()) {
+                    String input = editText.getText().toString();
+                    String[] parts = input.split("\\+|-|\\*|/"); // Split input by operator
 
-                if (mAddition == true) {
-                    editText.setText(mValueOne + mValueTwo + "");
-                    mAddition = false;
-                }
-                if (mSubtract == true) {
-                    editText.setText(mValueOne - mValueTwo + "");
-                    mSubtract = false;
-                }
+                    if (parts.length == 2) {
+                        float operand1 = Float.parseFloat(parts[0]);
+                        float operand2 = Float.parseFloat(parts[1]);
 
-                if (mMultiplication == true) {
-                    editText.setText(mValueOne * mValueTwo + "");
-                    mMultiplication = false;
-                }
+                        if (mAddition == true) {
+                            editText.setText(operand1 + operand2 + "");
+                            mAddition = false;
+                        }
+                        if (mSubtract == true) {
+                            editText.setText(operand1 - operand2+ "");
+                            mSubtract = false;
+                        }
 
-                if (mDivision == true) {
-                    editText.setText(mValueOne / mValueTwo + "");
-                    mDivision = false;
+                        if (mMultiplication == true) {
+                            editText.setText(operand1 * operand2 + "");
+                            mMultiplication = false;
+                        }
+
+                        if (mDivision == true) {
+                            editText.setText(operand1 / operand2 + "");
+                            mDivision = false;
+                        }
+                    }
+                    else {
+                        editText.setText("Invalid input");
+                    }
                 }
             }
         });
